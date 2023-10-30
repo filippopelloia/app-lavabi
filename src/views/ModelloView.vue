@@ -70,7 +70,6 @@
             <!-- END INPUT -->
 
 
-
             <!-- BUTTON RESET -->
             <button v-if="searchText === '' && selected === '' && selectedDimension === '' && selectedDepth === '' && numeroVasche === ''"
                     @click.prevent="resetData" 
@@ -145,7 +144,7 @@ export default {
 
         };
     },
-/*     computed: {
+    /*  computed: {
         filteredModels(){
             const search = this.searchText.toLowerCase();
             const selected = this.selected.toLowerCase();
@@ -178,10 +177,50 @@ export default {
             const selectedDepth = this.selectedDepth;
             const numeroVasche = this.numeroVasche; 
 
-            return this.models.filter(model => this.filteredModels(model, search, selected, selectedDimension, numeroVasche));
+            return this.models.filter(model => this.filterModel(model, search, selected, selectedDimension, numeroVasche));
         },
 
-        filterModel(model, search, selected, selectedDimension, numeroVasche)
+        filterModel(model, search, selected, selectedDimension, numeroVasche) {
+            const nome = model && model.val('nome').toLowerCase();
+            const base = model && model.val('base').toLowerCase();
+            const dimension = model && model.val('dimensioni');
+            const depth = model && model.val('profondita_vasca');
+            const vasche = model && model.val('descrizione_breve');
+
+            return (
+                this.filterByName(nome, search) &&
+                this.filterByBase(base, selected) &&
+                this.filterByDimension(dimension, selectedDimension) &&
+                this.filterByNumeroVasche(vasche, numeroVasche)
+            );
+        },
+
+        filterByName(nome, search){
+            return nome.startsWidth(search);
+        },
+
+        filterByBase(base, selected) {
+            return selected === '' || (base === selected) || (selected === 'corner' && base === 'corner');
+        },
+
+        filterByDimension(dimension, selectedDimension) {
+            return selectedDimension === '' || (dimension === selectedDimension);
+        },
+
+        filterByNumeroVasche(vasche, numeroVasche) {
+        if (numeroVasche === '') {
+            return true;
+        }
+
+        if (!vasche) {
+            return false;
+        }
+
+        const valuesToCheck = Array.isArray(vasche) ? vasche : [vasche];
+        return valuesToCheck.some(value => value.includes(numeroVasche.toString()));
+
+        }
+
     },
     methods: {
         //funzione RESET
