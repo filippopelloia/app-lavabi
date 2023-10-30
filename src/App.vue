@@ -1,5 +1,16 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
+<script>
+import { RouterLink, RouterView } from 'vue-router';
+import SwitchModeButton from './components/SwitchModeButton.vue';
+
+
+export default{
+  components: {
+    'mode-button': SwitchModeButton
+  }
+}
+
+
+
 </script>
 
 <template>

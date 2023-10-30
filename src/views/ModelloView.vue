@@ -3,55 +3,10 @@
 
         <div class="search-section">
 
-            
-            <!-- BASE -->
-<!--             <select v-model="selected" class="select-box">
-                <option disabled value="">Seleziona base</option>
-                <option>300</option>
-                <option>450</option>
-                <option>500</option>
-                <option>600</option>
-                <option>800</option>
-                <option>900</option>
-                <option>Corner</option>
-            </select> -->
-            <select v-model="selected" class="select-box">
-                <option disabled value="">Seleziona base</option>
 
-                <option v-for="(model, index) in sortedBase" :key="index">
-                    {{ model.val('base') }}
-                </option>
-
-            </select>
-            <!-- END BASE -->
-
-
-            <!-- DIMENSION -->
-<!--             <select v-model="selectedDimension" class="select-box">
-                <option disabled value="">Seleziona dimensione</option>
-                <option>1160 x 500</option>
-                <option>1000 x 500</option>
-                <option>900 x 665</option>
-                <option>900 x 635</option>
-                <option>860 x 510</option>
-                <option>860 x 500</option>
-                <option>860 x 460</option>
-                <option>860 x 180</option>
-                <option>838 x 483</option>
-                <option>790 x 500</option>
-                <option>570 x 510</option>
-                <option>570 x 500</option>
-                <option>510 x 510</option>
-            </select> -->
-            <!-- END DIMENSION -->
-
-
-            <!-- TEST DIMENSIONI -->
+            <!-- DIMENSIONI -->
             <select v-model="selectedDimension" class="select-box">
                 <option disabled value="">Seleziona dimensione</option>
-
-                <!-- cicla estrapolando tutte le misure disponibili per lavabi -->
-                <!-- affianca filteredModels incentrata su dimensioni a filteredModels normale -->
 
                 <option v-for="(model, index) in sortedModels" :key="index">
                     {{ model.val('dimensioni') }}
@@ -59,30 +14,6 @@
 
             </select>
 
-            <!-- END TEST DIMENSIONI -->
-
-
-            <!-- DEPTH -->
-<!--             <select v-model="selectedDepth" class="select-box">
-                <option disabled value="">Seleziona profondità</option>
-                <option>240</option>
-                <option>235</option>
-                <option>220</option>
-                <option>200</option>
-                <option>190</option>
-                <option>155</option>
-                <option>150</option>
-            </select> -->
-            <!-- END DEPTH -->
-
-
-            <!-- SECOND SINK BASIN -->
-<!--             <select v-model="numeroVasche" class="select-box">
-                <option disabled value="">Numero vasche</option>
-                <option>1</option>
-                <option>2</option>
-            </select> -->
-            <!-- SECOND SINK BASIN -->
 
 
             <!-- INPUT -->
@@ -91,137 +22,51 @@
                    placeholder="Ricerca un prodotto..."
                    v-model="searchText"
             >
-            <!-- END INPUT -->
+
 
 
             <!-- BUTTON RESET -->
-<!--             <button v-if="searchText === '' && selected === '' && selectedDimension === '' && selectedDepth === '' && numeroVasche === ''"
-                    @click.prevent="resetData" 
-                    class="reset-btn disabled-btn"
-            >RESET</button> -->
-
-            <button v-if="searchText === '' && selected === '' && selectedDimension === ''"
+            <button v-if="searchText === '' && selectedDimension === ''"
                     @click.prevent="resetData" 
                     class="reset-btn disabled-btn"
             >RESET</button>
 
+
+
             <button v-else @click.prevent="resetData" class="reset-btn">RESET</button>
-            <!-- END BUTTON RESET -->
 
         </div>
+
 
         <div class="card-container">
 
             <div v-for="(model, index) in filteredModels" 
-                 :key="index" 
-                 class="card-type"
+                :key="index" 
+                class="card-type"
             >
 
-                <div v-if="model.val('image')">
-                    <img :src="model.file('image').link({'x' : 200})" 
-                         :alt="model.val('nome')"
-                         class="product-image"
-                    >
-                </div>
+                <modello-template :modelliRisultanti="model"></modello-template>
 
-                <div v-else><h4>No image.</h4></div>
-
-                <h3 v-if="model.val('nome')">{{ model.val('nome') }}</h3>
-                <h4 v-if="model.val('dimensioni')">Dimensioni: {{ model.val('dimensioni') }}</h4>
-                <h5 v-if="model.val('base')">Base: {{ model.val('base') }}</h5>
-                <p v-if="model.val('descrizione_breve')">{{ model.val('descrizione_breve') }}</p>
-
-            </div> 
-<!--             <div v-for="(model, index) in filteredModels" 
-                 class="card-type"
-                 :key="index"
-            >
-                <div v-if="model.val('image')">
-                    <img :src="model.val('image') ? model.file('image').link({'x' : 200}) : ''" 
-                        :alt="model.val('nome')"
-                        class="image-product"
-                    >
-                </div>
-
-                <div v-else>
-                    <h3>No image.</h3>
-                </div>
-
-                <div v-if="model.val('nome')">
-                    <h3>{{ model.val('nome') }}</h3>
-                </div>
-
-                <div v-if="model.val('dimensioni')">
-                    <h4>Dimensioni: {{ model.val('dimensioni') }}</h4>
-                </div>
-
-                <div v-if="model.val('profondita') && model.val('profondita_seconda_vasca')">
-                    <h5>Profondità prima vasca: {{ model.val('profondita') }}</h5>
-                    <h5>Profondità seconda vasca: {{ model.val('profondita_seconda_vasca') }}</h5>
-                </div>
-
-                <div v-else>
-                    <div v-if="model.val('profondita_vasca')">
-                        <h5>Profondità vasca: {{ model.val('profondita_vasca') }}</h5>
-                    </div>
-                </div>
-
-                <div v-if="model.val('base')">
-                    <h4>Base: {{ model.val('base') }}</h4>
-                </div>
-
-                <div v-if="model.val('descrizione_breve')">
-                    <p>{{ model.val('descrizione_breve') }}</p>
-                </div>
-
-            </div> -->
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import * as onpage from '../components/product-onpage.js';
+import ModelloTemplate from '../components/ModelloTemplate.vue';
 
 export default {
     data(){
         return{
             models: onpage.models, 
             searchText: '',
-            selected: '',
             selectedDimension: '',
-
-/*          searchText: '',
-            selected: '',
-            selectedDimension: '',
-            selectedDepth: '',
-            numeroVasche: '' */
         };
     },
-    /*  computed: {
-        filteredModels(){
-            const search = this.searchText.toLowerCase();
-            const selected = this.selected.toLowerCase();
-            const selectedDimension = this.selectedDimension;
-            const selectedDepth = this.selectedDepth;
-            const numeroVasche = this.numeroVasche; 
-
-            return this.models.filter(model => {
-                const nome = model && model.val('nome')?.toLowerCase();
-                const base = model && model.val ('base')?.toLowerCase();
-                const dimension = model && model.val('dimensioni');
-                const depth = model && model.val('profondita_vasca');
-                const vasche = model && model.val('descrizione_breve');
-
-                return (
-                    (nome.startsWith(search)) && 
-                    (((selected === '') || (base === selected)) || ((selected === 'corner') && (base === 'corner'))) &&
-                    ((selectedDimension === '') || (dimension === selectedDimension)) &&
-                    ((numeroVasche === '') || ((vasche.includes(1) === numeroVasche) || (vasche.includes(2) === numeroVasche))
-                    )
-                );
-            })
-        }
-    }, */
+    components: {
+        'modello-template': ModelloTemplate
+    },
     computed: {
            filteredModels(){
             const search = this.searchText.toLowerCase();
@@ -233,10 +78,6 @@ export default {
                 .filter(model => {
                     const nome = model && model.val('nome');
                     return nome && nome.toLowerCase().startsWith(search);
-                })
-                .filter(model => {
-                    const base = model && model.val('base');
-                    return base && base.startsWith(searchBase);
                 })
                 .filter(model => {
                     const dimensione = model && model.val('dimensioni');
@@ -269,87 +110,7 @@ export default {
                     });
 
                     return uniqueModelsArray;
-            },
-            sortedBase(){
-                const uniqueBase = {};
-
-                this.models.forEach(model => {
-                    const base = model.val('base');
-                    if (!uniqueBase[base]) {
-                    uniqueBase[base] = model;
-                    }
-                });
-
-                const uniqueBaseArray = Object.values(uniqueBase);
-
-                uniqueBaseArray.sort((a, b) => {
-                    const baseA = a.val('base');
-                    const baseB = b.val('base');
-                    if (baseB < baseA) {
-                        return 1;
-                        }
-                        if (baseB > baseA) {
-                        return -1;
-                        }
-                        return 0;
-                    });
-
-                    return uniqueBaseArray;
             }
-
-
-        
-/*         filteredModels(){
-            const search = this.searchText.toLowerCase();
-            const selected = this.selected.toLowerCase();
-            const selectedDimension = this.selectedDimension;
-            const selectedDepth = this.selectedDepth;
-            const numeroVasche = this.numeroVasche; 
-
-            return this.models.filter(model => this.filterModel(model, search, selected, selectedDimension, numeroVasche));
-        }, */
-
-/*         filterModel(model, search, selected, selectedDimension, numeroVasche) {
-            const nome = model && model.val('nome')?.toLowerCase();
-            const base = model && model.val('base')?.toLowerCase();
-            const dimension = model && model.val('dimensioni');
-            const depth = model && model.val('profondita_vasca');
-            const vasche = model && model.val('descrizione_breve');
-
-            return (
-                this.filterByName(nome, search) &&
-                this.filterByBase(base, selected) &&
-                this.filterByDimension(dimension, selectedDimension) &&
-                this.filterByNumeroVasche(vasche, numeroVasche)
-            );
-        }, */
-/* 
-        filterByName(nome, search){
-            return nome.startsWidth(search);
-        },
-
-        filterByBase(base, selected) {
-            return selected === '' || (base === selected) || (selected === 'corner' && base === 'corner');
-        },
-
-        filterByDimension(dimension, selectedDimension) {
-            return selectedDimension === '' || (dimension === selectedDimension);
-        },
-
-        filterByNumeroVasche(vasche, numeroVasche) {
-        if (numeroVasche === '') {
-            return true;
-        }
-
-        if (!vasche) {
-            return false;
-        }
-
-        const valuesToCheck = Array.isArray(vasche) ? vasche : [vasche];
-        return valuesToCheck.some(value => value.includes(numeroVasche.toString()));
-
-        } */
-
     },
     methods: {
         //funzione RESET
@@ -359,6 +120,10 @@ export default {
             this.selectedDimension = '';
             this.selectedDepth = '';
             this.numeroVasche = '';
+        },
+        toggleImage() {
+            this.switchText = !this.switchText
+            this.$emit('setCheckboxVal', this.switchText)
         }
     }
 };
@@ -367,7 +132,7 @@ export default {
 
 
   
-<style scoped>
+<style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&family=Open+Sans:wght@300;400&family=Oswald:wght@200&family=Poppins:wght@100&display=swap');
     body{
         font-family: 'Montserrat', sans-serif;
@@ -441,5 +206,61 @@ export default {
     .select-box{
         padding: 7.5px;
         color: gray;
+    }
+    .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    }
+
+    .switch input {
+    display: none;
+    }
+
+    .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    }
+
+    .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    }
+
+    input:checked + .slider {
+    background-color: #101010;
+    }
+
+    input:focus + .slider {
+    box-shadow: 0 0 1px #101010;
+    }
+
+    input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    }
+
+    .slider.round {
+    border-radius: 34px;
+    }
+
+    .slider.round:before {
+    border-radius: 50%;
     }
 </style>
