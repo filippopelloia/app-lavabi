@@ -82,7 +82,28 @@
         </div>
 
         <div class="card-container">
+
             <div v-for="(model, index) in filteredModels" 
+                 :key="index" 
+                 class="card-type"
+            >
+
+                <div v-if="model.val('image')">
+                    <img :src="model.file('image').link({'x' : 200})" 
+                         :alt="model.val('nome')"
+                         class="product-image"
+                    >
+                </div>
+
+                <div v-else><h4>No image.</h4></div>
+
+                <h3 v-if="model.val('nome')">{{ model.val('nome') }}</h3>
+                <h4 v-if="model.val('dimensioni')">Dimensioni: {{ model.val('dimensioni') }}</h4>
+                <h5 v-if="model.val('base')">Base: {{ model.val('base') }}</h5>
+                <p v-if="model.val('descrizione_breve')">{{ model.val('descrizione_breve') }}</p>
+
+            </div> 
+<!--             <div v-for="(model, index) in filteredModels" 
                  class="card-type"
                  :key="index"
             >
@@ -124,7 +145,7 @@
                     <p>{{ model.val('descrizione_breve') }}</p>
                 </div>
 
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -137,11 +158,12 @@ export default {
         return{
             models: onpage.models, 
             searchText: '',
+            selected: ''
+/*          searchText: '',
             selected: '',
             selectedDimension: '',
             selectedDepth: '',
-            numeroVasche: ''
-
+            numeroVasche: '' */
         };
     },
     /*  computed: {
@@ -170,7 +192,18 @@ export default {
         }
     }, */
     computed: {
-        filteredModels(){
+           filteredModels(){
+            const search = this.searchText.toLowerCase();
+            const base = this.selected;
+
+            return this.models.filter(model => {
+                const nome = model && model.val('nome');
+
+                return nome && nome.toLowerCase().startsWith(search);
+            })
+           }    
+
+/*         filteredModels(){
             const search = this.searchText.toLowerCase();
             const selected = this.selected.toLowerCase();
             const selectedDimension = this.selectedDimension;
@@ -178,11 +211,11 @@ export default {
             const numeroVasche = this.numeroVasche; 
 
             return this.models.filter(model => this.filterModel(model, search, selected, selectedDimension, numeroVasche));
-        },
+        }, */
 
-        filterModel(model, search, selected, selectedDimension, numeroVasche) {
-            const nome = model && model.val('nome').toLowerCase();
-            const base = model && model.val('base').toLowerCase();
+/*         filterModel(model, search, selected, selectedDimension, numeroVasche) {
+            const nome = model && model.val('nome')?.toLowerCase();
+            const base = model && model.val('base')?.toLowerCase();
             const dimension = model && model.val('dimensioni');
             const depth = model && model.val('profondita_vasca');
             const vasche = model && model.val('descrizione_breve');
@@ -193,8 +226,8 @@ export default {
                 this.filterByDimension(dimension, selectedDimension) &&
                 this.filterByNumeroVasche(vasche, numeroVasche)
             );
-        },
-
+        }, */
+/* 
         filterByName(nome, search){
             return nome.startsWidth(search);
         },
@@ -219,7 +252,7 @@ export default {
         const valuesToCheck = Array.isArray(vasche) ? vasche : [vasche];
         return valuesToCheck.some(value => value.includes(numeroVasche.toString()));
 
-        }
+        } */
 
     },
     methods: {
