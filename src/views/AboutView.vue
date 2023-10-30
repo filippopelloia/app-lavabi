@@ -20,7 +20,6 @@
     },
     data(){
       return{
-        box: 'It\'s Monday',
         week: [
           'It\'s Monday',
           'It\'s Tuesday',
