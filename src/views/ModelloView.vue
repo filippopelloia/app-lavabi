@@ -158,7 +158,8 @@ export default {
         return{
             models: onpage.models, 
             searchText: '',
-            selected: ''
+            selected: '',
+            selectedDimension: ''
 /*          searchText: '',
             selected: '',
             selectedDimension: '',
@@ -194,13 +195,23 @@ export default {
     computed: {
            filteredModels(){
             const search = this.searchText.toLowerCase();
-            const base = this.selected;
+            const searchBase = this.selected;
+            const dimension = this.selectedDimension;
 
-            return this.models.filter(model => {
-                const nome = model && model.val('nome');
+            return this.models
+                .filter(model => {
+                    const nome = model && model.val('nome');
+                    return nome && nome.toLowerCase().startsWith(search);
+                })
+                .filter(model => {
+                    const base = model && model.val('base');
+                    return base && base.startsWith(searchBase);
+                })
+                .filter(model => {
+                    const dimensione = model && model.val('dimensioni');
+                    return dimensione && dimensione.startsWith(dimension);
+                })
 
-                return nome && nome.toLowerCase().startsWith(search);
-            })
            }    
 
 /*         filteredModels(){
