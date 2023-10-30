@@ -23,10 +23,8 @@ export const collections = await type.rel('collezione');
 
 
 //==============  models
-
 export const models = await type.rel('collezione.modello');
 
 
 //==============  products
-
 export const products = await type.rel('collezione.modello.prodotto');

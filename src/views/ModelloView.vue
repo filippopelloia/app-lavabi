@@ -5,7 +5,7 @@
 
             
             <!-- BASE -->
-            <select v-model="selected" class="select-box">
+<!--             <select v-model="selected" class="select-box">
                 <option disabled value="">Seleziona base</option>
                 <option>300</option>
                 <option>450</option>
@@ -14,12 +14,20 @@
                 <option>800</option>
                 <option>900</option>
                 <option>Corner</option>
+            </select> -->
+            <select v-model="selected" class="select-box">
+                <option disabled value="">Seleziona base</option>
+
+                <option v-for="(model, index) in sortedBase" :key="index">
+                    {{ model.val('base') }}
+                </option>
+
             </select>
             <!-- END BASE -->
 
 
             <!-- DIMENSION -->
-            <select v-model="selectedDimension" class="select-box">
+<!--             <select v-model="selectedDimension" class="select-box">
                 <option disabled value="">Seleziona dimensione</option>
                 <option>1160 x 500</option>
                 <option>1000 x 500</option>
@@ -34,12 +42,28 @@
                 <option>570 x 510</option>
                 <option>570 x 500</option>
                 <option>510 x 510</option>
-            </select>
+            </select> -->
             <!-- END DIMENSION -->
 
 
+            <!-- TEST DIMENSIONI -->
+            <select v-model="selectedDimension" class="select-box">
+                <option disabled value="">Seleziona dimensione</option>
+
+                <!-- cicla estrapolando tutte le misure disponibili per lavabi -->
+                <!-- affianca filteredModels incentrata su dimensioni a filteredModels normale -->
+
+                <option v-for="(model, index) in sortedModels" :key="index">
+                    {{ model.val('dimensioni') }}
+                </option>
+
+            </select>
+
+            <!-- END TEST DIMENSIONI -->
+
+
             <!-- DEPTH -->
-            <select v-model="selectedDepth" class="select-box">
+<!--             <select v-model="selectedDepth" class="select-box">
                 <option disabled value="">Seleziona profondità</option>
                 <option>240</option>
                 <option>235</option>
@@ -48,16 +72,16 @@
                 <option>190</option>
                 <option>155</option>
                 <option>150</option>
-            </select>
+            </select> -->
             <!-- END DEPTH -->
 
 
             <!-- SECOND SINK BASIN -->
-            <select v-model="numeroVasche" class="select-box">
+<!--             <select v-model="numeroVasche" class="select-box">
                 <option disabled value="">Numero vasche</option>
                 <option>1</option>
                 <option>2</option>
-            </select>
+            </select> -->
             <!-- SECOND SINK BASIN -->
 
 
@@ -71,7 +95,12 @@
 
 
             <!-- BUTTON RESET -->
-            <button v-if="searchText === '' && selected === '' && selectedDimension === '' && selectedDepth === '' && numeroVasche === ''"
+<!--             <button v-if="searchText === '' && selected === '' && selectedDimension === '' && selectedDepth === '' && numeroVasche === ''"
+                    @click.prevent="resetData" 
+                    class="reset-btn disabled-btn"
+            >RESET</button> -->
+
+            <button v-if="searchText === '' && selected === '' && selectedDimension === ''"
                     @click.prevent="resetData" 
                     class="reset-btn disabled-btn"
             >RESET</button>
@@ -159,7 +188,8 @@ export default {
             models: onpage.models, 
             searchText: '',
             selected: '',
-            selectedDimension: ''
+            selectedDimension: '',
+
 /*          searchText: '',
             selected: '',
             selectedDimension: '',
@@ -197,6 +227,7 @@ export default {
             const search = this.searchText.toLowerCase();
             const searchBase = this.selected;
             const dimension = this.selectedDimension;
+            const depth = this.selectedDepth;
 
             return this.models
                 .filter(model => {
@@ -211,9 +242,63 @@ export default {
                     const dimensione = model && model.val('dimensioni');
                     return dimensione && dimensione.startsWith(dimension);
                 })
+           },    
 
-           }    
+           sortedModels() {
+                const uniqueDimensioni = {};
 
+                this.models.forEach(model => {
+                    const dimensioni = model.val('dimensioni');
+                    if (!uniqueDimensioni[dimensioni]) {
+                    uniqueDimensioni[dimensioni] = model;
+                    }
+                });
+
+                const uniqueModelsArray = Object.values(uniqueDimensioni);
+
+                uniqueModelsArray.sort((a, b) => {
+                    const dimensioniA = a.val('dimensioni');
+                    const dimensioniB = b.val('dimensioni');
+                    if (dimensioniB < dimensioniA) {
+                        return 1; 
+                        }
+                        if (dimensioniB > dimensioniA) {
+                        return -1; 
+                        }
+                        return 0;
+                    });
+
+                    return uniqueModelsArray;
+            },
+            sortedBase(){
+                const uniqueBase = {};
+
+                this.models.forEach(model => {
+                    const base = model.val('base');
+                    if (!uniqueBase[base]) {
+                    uniqueBase[base] = model;
+                    }
+                });
+
+                const uniqueBaseArray = Object.values(uniqueBase);
+
+                uniqueBaseArray.sort((a, b) => {
+                    const baseA = a.val('base');
+                    const baseB = b.val('base');
+                    if (baseB < baseA) {
+                        return 1;
+                        }
+                        if (baseB > baseA) {
+                        return -1;
+                        }
+                        return 0;
+                    });
+
+                    return uniqueBaseArray;
+            }
+
+
+        
 /*         filteredModels(){
             const search = this.searchText.toLowerCase();
             const selected = this.selected.toLowerCase();
