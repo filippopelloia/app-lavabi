@@ -6,6 +6,25 @@ import SwitchModeButton from './components/SwitchModeButton.vue';
 export default{
   components: {
     'mode-button': SwitchModeButton
+  },
+  methods: {
+    toggleSwitch(){
+      this.isVisible = !this.isVisible;
+    }
+  },
+  data(){
+    return{
+      isVisible: true,
+      result: this.isVisible ? 'Visible' : 'Invisible'
+    }
+  },
+  computed: {
+    result(){
+      return this.isVisible ? 'Visible' : 'Invisible'
+    },
+    headerMode(){
+      return this.isVisible ? 'dark' : ''
+    }
   }
 }
 
@@ -14,7 +33,7 @@ export default{
 </script>
 
 <template>
-  <header>
+  <header :class="headerMode">
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="65" height="65" />
 
     <div class="wrapper">
@@ -26,6 +45,7 @@ export default{
         <RouterLink to="/about">ABOUT</RouterLink>
       </nav>
     </div>
+    <mode-button :visible="isVisible" @change="toggleSwitch"></mode-button>
   </header>
 
   <RouterView />
@@ -54,6 +74,10 @@ header {
   padding: 10px 35px;
 }
 
+.logo{
+  width: 42px;
+}
+
 nav {
   width: 100%;
   font-size: 12px;
@@ -79,6 +103,13 @@ nav a {
 
 nav a:first-of-type {
   border: 0;
+}
+.dark{
+  color: #fff;
+  background-color: #262626;
+}
+.dark > div > nav > a{
+  color: #fff;
 }
 
 </style>

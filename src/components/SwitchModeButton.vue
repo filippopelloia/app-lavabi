@@ -1,17 +1,28 @@
 <template>
-    <label class="switch">
-        <input type="checkbox" @click.prevent="toggleImage">
-        <span class="slider round"></span>
-    </label>
+    <div>
+        <label class="switch">
+            <input type="checkbox" v-model="toggleImage">
+            <span class="slider round"></span>
+        </label>
+    </div>
 </template>
 
 <script>
 export default{
     data() {
         return{
-            toggleImage: false
+/*             toggleImage: false, */
+            toggleImage: this.visible
         }
     },
+    methods: {
+        toggleSwitch(){
+            this.$emit('change', this.toggleImage);
+        }
+    },
+    props: {
+        visible: Boolean,
+    }
 }
 </script>
 
@@ -34,7 +45,7 @@ export default{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #262626;
     -webkit-transition: 0.4s;
     transition: 0.4s;
     }
@@ -52,11 +63,11 @@ export default{
     }
 
     input:checked + .slider {
-    background-color: #101010;
+    background-color: #ccc;
     }
 
     input:focus + .slider {
-    box-shadow: 0 0 1px #101010;
+    box-shadow: 0 0 1px #ccc;
     }
 
     input:checked + .slider:before {

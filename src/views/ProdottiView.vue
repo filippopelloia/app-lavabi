@@ -45,37 +45,3 @@
   };
   </script>
   
-  <style scoped>
-    .image-product {
-      width: 100%;
-      display: block;
-      margin-bottom: 25px;
-    }
-    .card-container {
-      width: 90%;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 100px;
-      display: grid;
-      grid-template: auto auto / repeat(4, 1fr);
-      gap: 20px;
-    }
-    .card-type {
-      border: 1px solid #000000;
-      border-radius: 5px;
-      padding: 50px 10px;
-      text-align: center;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .search-product {
-      width: 300px;
-      padding: 7.5px;
-      margin-left: 50%;
-      transform: translateX(-50%);
-      margin-top: 100px;
-    }
-  </style>
-  

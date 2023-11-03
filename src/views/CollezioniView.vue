@@ -1,10 +1,23 @@
 <template>
     <div>
-      <input class="search-product" 
-             type="text" 
-             placeholder="Ricerca un prodotto..."
-             v-model="searchText"
-      >
+
+        <div v-show="!filtriMode">
+            <button class="filtro-btn" @click.prevent="showFiltri">Filtri</button>
+        </div>
+
+        <div class="search-section" v-show="filtriMode">
+
+            <img src="../assets/IMG/close.png" 
+                 class="close-btn"
+                 @click.prevent="showFiltri"
+            >
+
+            <input class="search-product" 
+                    type="text" 
+                    placeholder="Ricerca una collezione..."
+                    v-model="searchText"
+            >
+        </div>
 
       <div class="card-container">
         <div v-for="(collection, index) in filteredCollections" 
@@ -24,11 +37,14 @@
                 >
             </div>
             <div v-else>
-                <h3>No image</h3>
+                <div class="noImage">
+                    <h5>No image.</h5>
+                </div>
             </div>
 
 
-            <h5>{{ collection.val('nome') }}</h5>
+            <h5 v-if="collection.val('nome')">{{ collection.val('nome') }}</h5>
+            <h6 v-if="collection.val('tipologia1')">{{ collection.val('tipologia1') }}</h6>
         </div>
       </div>
 
@@ -42,9 +58,15 @@ export default {
     data(){
         return{
             collections: onpage.collections, 
-            searchText: ''
+            searchText: '',
+            filtriMode: false
         };
     },
+    methods: {
+        showFiltri(){
+            this.filtriMode = !this.filtriMode;
+        }
+    },  
     computed: {
         filteredCollections(){
             const search = this.searchText.toLowerCase();
@@ -59,40 +81,3 @@ export default {
 
 </script>
 
-
-  
-<style scoped>
-    .image-collection{
-        width: 100%;
-        display: block;
-        margin-bottom: 25px;
-    }
-    .card-container{
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 100px;
-        display: grid;
-        grid-template: auto auto / repeat(4, 1fr);
-        gap: 20px;
-    }
-    .card-type{
-        background-color: brown;
-        border-radius: 5px;
-        padding: 50px 10px;
-        text-align: center;
-        color: #fff;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .search-product{
-        width: 300px;
-        padding: 7.5px;
-        margin-left: 50%;
-        transform: translateX(-50%);
-        margin-top: 100px;
-    }
-</style>

@@ -59,7 +59,11 @@
 
 </script>
 
-<style scoped>
+<!-- <style scoped>
+  h1{
+    text-align: center;
+    margin-top: 100px;
+  }
   .card-about-content, .product-section{
     display: grid;
     gap: 50px;
@@ -71,4 +75,4 @@
   .product-section{
     grid-template: auto auto / repeat(4, 1fr);
   }
-</style>
+</style> -->
