@@ -20,26 +20,34 @@
           <input class="search-product" type="text" placeholder="Ricerca un prodotto" v-model="searchText">
       </div>
   
+
+
       <div class="card-container">
-        <div v-for="(product, index) in filteredProducts" 
-             class="card-type"
-             :class="isVisible ? 'dark' : 'white'"
-             :key="index"
-        >
-          <img :src="product.val('image') ? product.file('image').link({'x' : 400}) : ''" 
-               alt="Product image"
-               class="image-product"
+          <RouterLink :to="{ name: 'prodotto', params: { productId: product.val('sku') } }" 
+                      v-for="(product, index) in filteredProducts"
+                      class="card-type"
+                      :class="isVisible ? 'dark' : 'white'"
+                      :key="index"
           >
-          <h5>SKU: {{ product.val('sku') }}</h5>
-          <h5>EAN: {{ product.val('ean') }}</h5>
-        </div>
+
+                <img :src="product.val('image') ? product.file('image').link({'x' : 400}) : ''" 
+                    alt="Product image"
+                    class="image-product"
+                >
+                <h5>SKU: {{ product.val('sku') }}</h5>
+                <h5>EAN: {{ product.val('ean') }}</h5>
+
+          </RouterLink>
       </div>
     </div>
   </template>
+
+
   
   <script>
   import * as onpage from '../components/product-onpage.js';
   import { inject } from 'vue';
+  import { RouterLink, RouterView } from 'vue-router';
   
   export default {
     data() {

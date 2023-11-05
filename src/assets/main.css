@@ -311,3 +311,25 @@ border-radius: 50%;
     .slider.round:before {
         border-radius: 50%;
     }
+
+    .single-product-data{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .image-single-product{
+        margin: 100px auto 50px auto;
+    }
+
+    .codes{
+        width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: start;
+    }
+
+    .codes > h2{
+        font-weight: 300;
+    }
