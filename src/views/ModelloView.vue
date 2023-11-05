@@ -1,11 +1,17 @@
 <template>
-    <div>
+    <div :class="isVisible ? 'white' : 'dark'">
 
         <div v-show="!filtriMode">
-            <button class="filtro-btn" @click.prevent="showFiltri">Filtri</button>
+            <button class="filtro-btn" 
+                    :class="isVisible ? 'dark' : 'white'"
+                    @click.prevent="showFiltri"
+            >Filtri</button>
         </div>
 
-        <div class="search-section" v-show="filtriMode">
+        <div class="search-section" 
+             v-show="filtriMode"
+             :class="isVisible ? 'dark-gray' : 'dark-white'"
+        >
 
             <img src="../assets/IMG/close.png" 
                  class="close-btn"
@@ -49,8 +55,9 @@
         <div class="card-container">
 
             <div v-for="(model, index) in filteredModels" 
-                :key="index" 
                 class="card-type"
+                :class="isVisible ? 'dark' : 'white'"
+                :key="index" 
             >
 
                 <modello-template :modelliRisultanti="model"></modello-template>
@@ -63,6 +70,7 @@
 <script>
 import * as onpage from '../components/product-onpage.js';
 import ModelloTemplate from '../components/ModelloTemplate.vue';
+import { inject } from 'vue';
 
 export default {
     data(){
@@ -137,6 +145,10 @@ export default {
         showFiltri(){
             this.filtriMode = !this.filtriMode;
         }
+    },
+    setup(){
+        const isVisible = inject('isVisible');
+        return { isVisible };
     }
 };
 

@@ -1,48 +1,54 @@
 <script>
-import { RouterLink, RouterView } from 'vue-router';
-import SwitchModeButton from './components/SwitchModeButton.vue';
+  import { RouterLink, RouterView } from 'vue-router';
+  import { ref, provide } from 'vue';
+  import SwitchModeButton from './components/SwitchModeButton.vue';
 
 
-export default{
-  components: {
-    'mode-button': SwitchModeButton
-  },
-  methods: {
-    toggleSwitch(){
-      this.isVisible = !this.isVisible;
-    }
-  },
-  data(){
-    return{
-      isVisible: true,
-      result: this.isVisible ? 'Visible' : 'Invisible'
-    }
-  },
-  computed: {
-    result(){
-      return this.isVisible ? 'Visible' : 'Invisible'
+  export default{
+    components: {
+      'mode-button': SwitchModeButton
     },
-    headerMode(){
-      return this.isVisible ? 'dark' : ''
+    methods: {
+      toggleSwitch(){
+        this.isVisible = !this.isVisible;
+      },
+      isCurrentPage(pageName){
+        return this.$route.name === pageName
+      }
+    },
+    data(){
+      return{
+        isVisible: true
+      }
+    },
+
+    //================ COMPOSITION API ==========================
+    setup(){
+      const isVisible = ref(true);
+      provide('isVisible', isVisible);
+
+      const result = () => {
+        return this.isVisible ? 'Visible' : 'Invisible'
+      }
+
+      return{
+        isVisible, result
+      }
     }
   }
-}
-
-
-
 </script>
 
 <template>
-  <header :class="headerMode">
+  <header :class="isVisible ? 'dark' : 'white'">
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="65" height="65" />
 
     <div class="wrapper">
       <nav>
-        <RouterLink to="/">HOME</RouterLink>
-        <RouterLink to="/collezioni">COLLEZIONI</RouterLink>
-        <RouterLink to="/modelli">MODELLI</RouterLink>
-        <RouterLink to="/prodotti">PRODOTTI</RouterLink>
-        <RouterLink to="/about">ABOUT</RouterLink>
+        <RouterLink to="/" :class="{ active: isCurrentPage('home') }">HOME</RouterLink>
+        <RouterLink to="/collezioni" :class="{ active: isCurrentPage('collezioni') }">COLLEZIONI</RouterLink>
+        <RouterLink to="/modelli" :class="{ active: isCurrentPage('modelli') }">MODELLI</RouterLink>
+        <RouterLink to="/prodotti" :class="{ active: isCurrentPage('prodotti') }">PRODOTTI</RouterLink>
+        <RouterLink to="/about" :class="{ active: isCurrentPage('about') }">ABOUT</RouterLink>
       </nav>
     </div>
     <mode-button :visible="isVisible" @change="toggleSwitch"></mode-button>
@@ -51,65 +57,3 @@ export default{
   <RouterView />
 </template>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Open+Sans:wght@300;400&family=Oswald:wght@200&family=Poppins:wght@100&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  text-decoration: none;
-}
-
-body{
-  font-family: 'Montserrat', sans-serif;
-}
-
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-  background-color: lightgray;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 35px;
-}
-
-.logo{
-  width: 42px;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-nav a.router-link-exact-active {
-  color: #000000;
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-.dark{
-  color: #fff;
-  background-color: #262626;
-}
-.dark > div > nav > a{
-  color: #fff;
-}
-
-</style>

@@ -1,4 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&family=Open+Sans:wght@300;400&family=Oswald:wght@200&family=Poppins:wght@100&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
 body{
     font-family: 'Montserrat', sans-serif;
 }
@@ -7,6 +14,66 @@ h1{
     text-align: center;
     margin-top: 100px;
 }
+
+header {
+    line-height: 1.5;
+    max-height: 100vh;
+    background-color: lightgray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 35px;
+  }
+  
+  .logo{
+    width: 42px;
+  }
+  
+  nav {
+    width: 100%;
+    font-size: 12px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  nav a.router-link-exact-active {
+    color: #000000;
+  }
+  
+  nav a.router-link-exact-active:hover {
+    background-color: transparent;
+  }
+  
+  nav a {
+    display: inline-block;
+    padding: 0 1rem;
+    border-left: 1px solid var(--color-border);
+  }
+  
+  nav a:first-of-type {
+    border: 0;
+  }
+  .dark{
+    color: #fff;
+    background-color: #262626;
+  }
+  .dark > div > nav > a{
+    color: #fff;
+  }
+
+  .white{
+    background-color: lightgray;
+  }
+
+  .white, .white > div > nav > a{
+    color: #262626;
+  }
+
+  .active{
+    color: #41B883!important;
+  }
 
 .card-about-content, .product-section{
     display: grid;
@@ -17,15 +84,14 @@ h1{
     grid-template: auto auto / repeat(7, 1fr);
   }
   .product-section{
-    grid-template: auto auto / repeat(4, 1fr);
+    grid-template: auto auto / repeat(3, 1fr);
   }
 
 .filtro-btn{
     padding: 5px 20px;
-    background-color: transparent;
     border: 1px solid grey;
     cursor: pointer;
-    margin: 30px 5%;
+    margin: 30px 15%;
     border-radius: 2px;
 }
 .close-btn{
@@ -33,14 +99,17 @@ h1{
     display: block;
     cursor: pointer;
     position: absolute;
-    left: 50px;
+    left: 16.5%;
 }
 .image-product {
-    width: 60%;
+/*     width: 60%; */
     display: block;
     margin-bottom: 25px;
     margin-left: auto;
     margin-right: auto;
+    max-width: 60%;
+    max-height: 165px;
+    object-fit: cover;
 }
 h3{
     font-weight: 500;
@@ -54,39 +123,14 @@ h4, h5, p{
 p{
     font-size: 12.5px;
 }
-.image-collection{
-    width: 100%;
-    display: block;
-    margin-bottom: 25px;
-    object-fit: cover;
-}
-.card-container{
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
-    display: grid;
-    grid-template: auto auto / repeat(4, 1fr);
-    gap: 20px;
-}
-.card-type{
-    border-radius: 5px;
-    padding: 50px 10px;
-    text-align: center;
-    border: 1px solid gray;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
 
 .search-section{
     padding: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #262626;
     gap: 25px;
+    background-color: #41B883;
 }
 .reset-btn{
     background-color: red;
@@ -103,10 +147,10 @@ p{
     color: gray;
 }
 .switch {
-position: relative;
-display: inline-block;
-width: 60px;
-height: 34px;
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
 }
 
 .switch input {
@@ -161,36 +205,6 @@ border-radius: 50%;
 
 
 
-
-.image-collection{
-    width: 100%;
-    display: block;
-    margin-bottom: 25px;
-    height: 165px;
-    border-radius: 5px;
-}
-.card-container{
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
-    display: grid;
-    grid-template: auto auto / repeat(4, 1fr);
-    gap: 20px;
-}
-.card-type{
-/*         background-color: brown; */
-    border-radius: 5px;
-    padding: 50px 10px;
-    border: 1px solid gray;
-    text-align: center;
-/*         color: #fff; */
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
 .search-product{
     width: 300px;
     padding: 7.5px;
@@ -206,33 +220,94 @@ border-radius: 50%;
     background-color: #262626;
 }
 
-.noImage > h5{
-    color: #fff;
-}
+    .noImage > h5{
+        color: #fff;
+    }
+    .image-collection{
+        width: 100%;
+        height: 165px;
+        display: block;
+        margin-bottom: 25px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+    .card-container {
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+        display: grid;
+        grid-template: auto auto / repeat(3, 1fr);
+        gap: 20px;
+    }
+    .card-type {
+        border: 1px solid #000000;
+        border-radius: 5px;
+        padding: 50px 10px;
+        text-align: center;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 
+    .modelloName{
+        margin-top: 20px;
+    }
 
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
 
-.image-product {
-    width: 100%;
-    display: block;
-    margin-bottom: 25px;
-  }
-  .card-container {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
-    display: grid;
-    grid-template: auto auto / repeat(4, 1fr);
-    gap: 20px;
-  }
-  .card-type {
-    border: 1px solid #000000;
-    border-radius: 5px;
-    padding: 50px 10px;
-    text-align: center;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+    .switch input {
+        display: none;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #262626;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+    }
+
+    input:checked + .slider {
+        background-color: #ccc;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #ccc;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
