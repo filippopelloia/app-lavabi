@@ -312,6 +312,10 @@ border-radius: 50%;
         border-radius: 50%;
     }
 
+    .single-product-page{
+        padding: 0 200px;
+    }
+
     .single-product-data{
         display: flex;
         justify-content: center;
@@ -332,4 +336,14 @@ border-radius: 50%;
 
     .codes > h2{
         font-weight: 300;
+    }
+
+    .block-relation{
+        height: 100px;
+        width: 100%;
+        background-color: orange;
+        margin: 50px auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
