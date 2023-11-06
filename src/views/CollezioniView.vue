@@ -32,15 +32,17 @@
              :key="index"
         >
             <div v-if="collection.val('image')">
-                <img :src="collection.file('image').link({'x' : 400})" 
-                    alt="Collection image"
-                    class="image-collection"
+                <img v-if="collection.val('image')"
+                     :src="collection.file('image').link({'x' : 400})" 
+                     alt="Collection image"
+                     class="image-collection"
                 >
             </div>
             <div v-else-if="collection.val('ambientata')">
-                <img :src="collection.file('ambientata').link({'x' : 400})" 
-                    alt="Collection image"
-                    class="image-collection"
+                <img v-if="collection.val('ambientata')"
+                     :src="collection.file('ambientata').link({'x' : 400})" 
+                     alt="Collection image"
+                     class="image-collection"
                 >
             </div>
             <div v-else>

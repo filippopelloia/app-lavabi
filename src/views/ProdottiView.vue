@@ -21,7 +21,7 @@
       </div>
   
 
-
+      <!-- cards section -->
       <div class="card-container">
           <RouterLink :to="{ name: 'prodotto', params: { productId: product.val('sku') } }" 
                       v-for="(product, index) in filteredProducts"
@@ -31,8 +31,8 @@
           >
 
                 <img :src="product.val('image') ? product.file('image').link({'x' : 400}) : ''" 
-                    alt="Product image"
-                    class="image-product"
+                     alt="Product image"
+                     class="image-product"
                 >
                 <h5>SKU: {{ product.val('sku') }}</h5>
                 <h5>EAN: {{ product.val('ean') }}</h5>

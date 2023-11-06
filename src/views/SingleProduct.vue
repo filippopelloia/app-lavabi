@@ -15,20 +15,44 @@
 
                 <div class="block-relation">
                     <h3>Modello:</h3>
+                    <h3>{{ randNum }}</h3>
+                </div>
 
-                    <div v-for="(model, index) in models" :key="index">
 
-                    <!-- devi prendere il model che è in relazione con l'attuale prodotto -->
-                        <div v-if="model.rel('modello')">
-                            <h4>{{ product.rel('modello.nome') }}</h4>
-                            <h4>Ciao</h4>
-                        </div>
+                <!-- altri prodotti -->
+                <div class="block-products">
+                    <h3>Altri prodotti: </h3>
+                    <h4>Tot: {{ totNumProducts }}</h4>
+                    <div>
+                        <div class="card-container">
+                            <RouterLink :to="{ name: 'prodotto', params: { productId: product.val('sku') } }" 
+                                        v-for="(product, index) in products.slice(randNum, (randNum +3))"
+                                        class="card-type"
+                                        :class="isVisible ? 'dark' : 'white'"
+                                        :key="index"
+                            >
 
-                        <div v-else>
-                            <h3>Nothing</h3>
+
+                                    <img v-if="product.val('image')" :src="product.val('image') ? product.file('image').link({'x' : 400}) : ''" 
+                                        alt="Product image"
+                                        class="image-product"
+                                    >
+
+                                    <h5>SKU: {{ product.val('sku') }}</h5>
+                                    <h5>EAN: {{ product.val('ean') }}</h5>
+
+                            </RouterLink>
                         </div>
                     </div>
+
+                    <div v-show="!filtriMode">
+                        <RouterLink class="filtro-btn show-more-btn" 
+                                    :class="isVisible ? 'dark' : 'white'"
+                                    to="/prodotti"
+                        >Show more</RouterLink>
+                    </div>
                 </div>
+
 
             </div>
         </div>
@@ -38,13 +62,16 @@
 
 <script>
     import * as onpage from '../components/product-onpage.js';
+    import { inject } from 'vue';
 
     export default {
         data(){
             return{
                 currentProduct: '',
                 products: onpage.products,
-                models: onpage.models
+                models: onpage.models,
+                totNumProducts: onpage.totNumProducts,
+                filtriMode: false
             }
         },
         props: {
@@ -52,6 +79,20 @@
         },
         created(){
             this.currentProduct = this.$route.params.productId
+            this.randNum = Math.floor(Math.random() * this.totNumProducts) + 1,
+            this.calculateRandNum()
         },
+        setup(){
+            const isVisible = inject('isVisible');
+            return { isVisible };
+        },
+        methods: {
+            calculateRandNum() {
+                const maxRange = this.randNum + 3;
+                if (maxRange > this.totNumProducts) {
+                    this.randNum = Math.floor(Math.random() * this.totNumProducts) + 1;
+                }
+            },
+        }
     }
 </script>

@@ -87,12 +87,15 @@ header {
     grid-template: auto auto / repeat(3, 1fr);
   }
 
-.filtro-btn{
-    padding: 5px 20px;
+
+.filtro-btn, .show-more-btn{
     border: 1px solid grey;
     cursor: pointer;
     margin: 30px 15%;
     border-radius: 2px;
+}
+.filtro-btn{
+    padding: 5px 20px;
 }
 .close-btn{
     height: 25px;
@@ -100,6 +103,15 @@ header {
     cursor: pointer;
     position: absolute;
     left: 16.5%;
+}
+.show-more-btn{
+    font-size: 12.5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 25px;
+}
+.show-more-btn:hover{
+    background-color: transparent;
 }
 .image-product {
 /*     width: 60%; */
@@ -339,11 +351,33 @@ border-radius: 50%;
     }
 
     .block-relation{
-        height: 100px;
+/*         height: 100px; */
         width: 100%;
         background-color: orange;
-        margin: 50px auto;
+        margin: 50px auto 25px auto;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        border-radius: 5px;
+        padding: 50px;
+        box-sizing: border-box;
+    }
+
+    .block-products{
+        background-color: #41B883;
+        padding: 50px;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 25px auto;
+        border-radius: 5px;
+    }
+
+    .block-products > div{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .block-products > div > .card-container{
+        margin-top: 20px;
     }

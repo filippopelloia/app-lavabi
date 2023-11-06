@@ -13,6 +13,7 @@ const schema = await api.loadSchema()
 const type = await schema.query("tipologia").first();
 const typeName = type.val('nome'); 
 
+/* let currentProduct = ''; */
 
 
 
@@ -26,5 +27,20 @@ export const collections = await type.rel('collezione');
 export const models = await type.rel('collezione.modello');
 
 
+//============== test
+/* export const filters = async (currentProduct) => {
+                    await schema.query('modello')
+                                .with('prodotto')
+                                .filterRelation('prodotto', q => {
+                                    q.where('sku', currentProduct)
+                                })
+                                .first();
+
+                    return filters;
+} */
+
+
 //==============  products
 export const products = await type.rel('collezione.modello.prodotto');
+
+export const totNumProducts = products.length;

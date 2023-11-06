@@ -2,9 +2,10 @@
     <div>
 
         <div v-if="filtro.val('image')">
-            <img :src="filtro.file('image').link({'x' : 200})" 
-                    :alt="filtro.val('nome')"
-                    class="image-product"
+            <img v-if="filtro.val('image')" 
+                 :src="filtro.file('image').link({'x' : 200})" 
+                 :alt="filtro.val('nome')"
+                 class="image-product"
             >
         </div>
 
