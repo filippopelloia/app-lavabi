@@ -15,7 +15,7 @@
 
                 <div class="block-relation">
                     <h3>Modello:</h3>
-                    <h3>{{ randNum }}</h3>
+                    <h3>Numero rand: {{ randNum }}</h3>
                 </div>
 
 
@@ -62,7 +62,8 @@
 
 <script>
     import * as onpage from '../components/product-onpage.js';
-    import { inject } from 'vue';
+    import { inject, ref, watch } from 'vue';
+    import { RouterLink, RouterView } from 'vue-router';
 
     export default {
         data(){
@@ -70,7 +71,7 @@
                 currentProduct: '',
                 products: onpage.products,
                 models: onpage.models,
-                totNumProducts: onpage.totNumProducts,
+                /* totNumProducts: onpage.totNumProducts, */
                 filtriMode: false
             }
         },
@@ -79,20 +80,33 @@
         },
         created(){
             this.currentProduct = this.$route.params.productId
-            this.randNum = Math.floor(Math.random() * this.totNumProducts) + 1,
-            this.calculateRandNum()
         },
         setup(){
             const isVisible = inject('isVisible');
-            return { isVisible };
-        },
-        methods: {
-            calculateRandNum() {
-                const maxRange = this.randNum + 3;
-                if (maxRange > this.totNumProducts) {
-                    this.randNum = Math.floor(Math.random() * this.totNumProducts) + 1;
+            const totNumProducts = onpage.totNumProducts;
+            let randNum = ref(Math.floor(Math.random() * totNumProducts) + 1);
+
+            const currentProductData = ref({}); // Inizializza i dati del prodotto corrente
+
+watch(
+  () => currentProductData.value,
+  () => {
+    // Qui puoi aggiornare currentProductData con i dati del prodotto corrente
+  }
+);
+
+            if(randNum.value <= 3){
+                randNum.value = Math.floor(Math.random() * totNumProducts) + 1;
+            }
+/* 
+            watch(
+                () => this.$route.params.productId,
+                (newProductId) => {
+                    this.currentProduct = newProductId;
                 }
-            },
+            );
+ */
+            return { isVisible, totNumProducts, randNum, currentProductData };
         }
     }
 </script>
